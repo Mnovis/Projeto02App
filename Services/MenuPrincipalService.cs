@@ -26,6 +26,7 @@
                     break;
 
                 case 3: Console.Clear();
+                    new TurmaService().ExecutarMenu();
                     break;
 
                 case 0: Console.Clear();
