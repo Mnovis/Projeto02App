@@ -253,6 +253,57 @@ namespace Projeto02App.Services
 
         private void Exportar()
         {
+            Console.WriteLine("\nExportar Turma\n");
+
+            Console.Write("Digite o Id Da Turma: ");
+            if (!Guid.TryParse(Console.ReadLine(), out var id))
+            {
+                Console.WriteLine("\nId Inválido\n");
+                return;
+            }
+
+            var turmaRepository = new TurmaRepository();
+            var turma = turmaRepository.ObterExportar(id);
+
+            if (turma == null)
+            {
+                Console.WriteLine("\nTurma não encontrada\n");
+                return;
+            }
+
+            Console.WriteLine("\tTurma: " + turma.Nome);
+
+            Console.WriteLine("\nEscolha o formato:");
+            Console.WriteLine("(1) JSON");
+            Console.WriteLine("(2) XML");
+            Console.WriteLine("(3) Os dois");
+
+            Console.Write("Informe a opção desejada: ");
+            if (!int.TryParse(Console.ReadLine(), out var opcao))
+            {
+                opcao = -1;
+            }
+
+            var turmaJsonRepository = new TurmaJsonRepository();
+            var turmaXmlRepository = new TurmaXmlRepository();
+
+            switch (opcao)
+            {
+                case 1:
+                    turmaJsonRepository.ExportarJson(turma);
+                    Console.WriteLine("\nTurma exportada com Sucesso!");
+
+                    break;
+
+                case 2: turmaXmlRepository.ExportarXml(turma);
+                    Console.WriteLine("\nTurma exportada com Sucesso!");
+
+                    break;
+
+                case 3: turmaXmlRepository.ExportarXml(turma); turmaJsonRepository.ExportarJson(turma);
+                    Console.WriteLine("\nTurma exportada com Sucesso!");
+                    break;
+            }
         }
     }
 }
