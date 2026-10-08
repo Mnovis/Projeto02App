@@ -21,6 +21,7 @@
                     break;
 
                 case 2: Console.Clear();
+                    new ProfessorService().ExecutarMenu();
                     break;
 
                 case 3: Console.Clear();
