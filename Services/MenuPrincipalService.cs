@@ -18,6 +18,7 @@
             switch (opcao)
             {
                 case 1: Console.Clear();
+                    new CursoService().ExecutarMenu();  
                     break;
 
                 case 2: Console.Clear();
