@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Projeto02App.Entities
+﻿namespace Projeto02App.Entities
 {
-    internal class Professor
+    public class Professor
     {
+        public Guid IdProfessor { get; set; } = Guid.NewGuid();
+
+        public string Nome { get; set; } = string.Empty;
+
+        public string Telefone { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
     }
 }
