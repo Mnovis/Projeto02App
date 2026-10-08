@@ -199,6 +199,9 @@ namespace Projeto02App.Services
             {
                 Console.WriteLine($"\nDados do Professor: Id: {professor.IdProfessor} Nome: {professor.Nome} Telefone: {professor.Telefone} Email: {professor.Email}");
             }
+
+            Console.WriteLine("Pressione uma tecla para continuar...");
+            Console.ReadKey();
         }
     }
 }
