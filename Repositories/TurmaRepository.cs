@@ -96,6 +96,35 @@ namespace Projeto02App.Repositories
             }
         }
 
+        public Turma? ObterExportar(Guid id)
+        {
+            var sql = """
+                      SELECT
+                            T.IDTURMA, T.NOME, T.DATAINICIO, T.HORARIO,
+                            P.IDPROFESSOR, P.NOME, P.TELEFONE, P.EMAIL,
+                            C.IDCURSO, C.NOME, C.CARGAHORARIA
+                      FROM TURMAS T
+                      INNER JOIN PROFESSORES P ON P.IDPROFESSOR = T.IDPROFESSOR
+                      INNER JOIN CURSOS C ON C.IDCURSO = T.IDCURSO
+                      WHERE T.IDTURMA = @IdTurma
+                      """;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<Turma, Professor, Curso, Turma>(
+                    sql,
+                    (turma, professor, curso) =>
+                    {
+                        turma.Professor = professor;
+                        turma.Curso = curso;
+                        return turma;
+                    },
+                    new { @IdTurma = id },
+                    splitOn: "IDPROFESSOR,IDCURSO"
+                ).FirstOrDefault();
+            }
+        }
+
         #endregion
     }
 }
