@@ -18,8 +18,8 @@ namespace Projeto02App.Repositories
         public void Inserir(Professor professor)
         {
             var sql = """
-                      INSERT INTO PROFESSORES(NOME, TELEFONE, EMAIL)
-                      VALUES(@Nome, @Telefone, @Email)
+                      INSERT INTO PROFESSORES(IDPROFESSOR, NOME, TELEFONE, EMAIL)
+                      VALUES(@IdProfessor, @Nome, @Telefone, @Email)
                       """;
 
             using (var connection = new SqlConnection(_connectionString))
@@ -37,7 +37,7 @@ namespace Projeto02App.Repositories
                             TELEFONE = @Telefone,
                             EMAIL = @Email
                       WHERE
-                            ID = @Id
+                            IDPROFESSOR = @IdProfessor
                       """;
 
             using (var connection = new SqlConnection(_connectionString))
@@ -50,12 +50,12 @@ namespace Projeto02App.Repositories
         {
             var sql = """
                       DELETE FROM PROFESSORES
-                      WHERE ID = @Id
+                      WHERE IDPROFESSOR = @IdProfessor
                       """;
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Execute(sql, new { @Id = id });
+                connection.Execute(sql, new { @IdProfessor = id });
             }
         }
 
@@ -76,12 +76,12 @@ namespace Projeto02App.Repositories
         {
             var sql = """
                       SELECT * FROM PROFESSORES
-                      WHERE ID = @Id
+                      WHERE IDPROFESSOR = @IdProfessor
                       """;
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                return connection.QueryFirstOrDefault<Professor>(sql, new { @Id = id });
+                return connection.QueryFirstOrDefault<Professor>(sql, new { @IdProfessor = id });
             }
         }
 
