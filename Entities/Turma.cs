@@ -18,6 +18,8 @@ namespace Projeto02App.Entities
         public DateTime DataInicio { get; set; }
 
         [Required(ErrorMessage = "O horário é obrigatório.")]
+        [MaxLength(150, ErrorMessage = "O {0} deve conter no máximo {1} caracteres.")]
+        [MinLength(6, ErrorMessage = "O {0} deve conter no mínimo {1} caracteres.")]
         public string Horario { get; set; } = string.Empty;
 
         public Professor? Professor { get; set; }
