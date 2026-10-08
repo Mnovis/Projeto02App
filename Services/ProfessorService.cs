@@ -19,20 +19,27 @@ namespace Projeto02App.Services
             Console.WriteLine("(0) Voltar");
 
             Console.Write("Informe a opção desejada: ");
-            var opcao = int.Parse(Console.ReadLine() ?? string.Empty);
+            if (!int.TryParse(Console.ReadLine(), out var opcao))
+            {
+                opcao = -1;
+            }
 
             switch (opcao)
             {
-                case 1: Cadastrar();
+                case 1:
+                    Cadastrar();
                     break;
 
-                case 2: Atualizar();
+                case 2:
+                    Atualizar();
                     break;
 
-                case 3: Excluir();
+                case 3:
+                    Excluir();
                     break;
 
-                case 4: Consultar();
+                case 4:
+                    Consultar();
                     break;
 
                 case 0:
@@ -71,9 +78,6 @@ namespace Projeto02App.Services
                 professorRepository.Inserir(professor);
 
                 Console.WriteLine("Professor Cadastrado!");
-
-                Console.WriteLine("Pressione uma tecla para continuar...");
-                Console.ReadKey();
             }
         }
 
@@ -82,7 +86,7 @@ namespace Projeto02App.Services
             Console.WriteLine("\nAtualizar Professor\n");
 
             Console.Write("Digite o Id Do Professor: ");
-            if (Guid.TryParse(Console.ReadLine(), out var id))
+            if (!Guid.TryParse(Console.ReadLine(), out var id))
             {
                 Console.WriteLine("\nId Inválido\n");
                 return;
@@ -94,9 +98,6 @@ namespace Projeto02App.Services
             if (professor == null)
             {
                 Console.WriteLine("\nProfessor não encontrado\n");
-
-                Console.WriteLine("Pressione uma tecla para continuar...");
-                Console.ReadKey();
                 return;
             }
 
@@ -115,7 +116,7 @@ namespace Projeto02App.Services
                 Console.Write("Informe o Nome: ");
                 professor.Nome = Console.ReadLine() ?? string.Empty;
 
-                Console.Write("Informe o Telefone: ");
+                Console.Write("Informe o Telefone (99) 99999-9999: ");
                 professor.Telefone = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("Informe o Email: ");
@@ -126,19 +127,12 @@ namespace Projeto02App.Services
                     professorRepository.Atualizar(professor);
 
                     Console.WriteLine("\nProfessor Atualizado!");
-
-                    Console.WriteLine("Pressione uma tecla para continuar...");
-                    Console.ReadKey();
                 }
             }
             else
             {
                 Console.WriteLine("\nOperação cancelada!");
-
-                Console.WriteLine("Pressione uma tecla para continuar...");
-                Console.ReadKey();
             }
-
         }
 
         private void Excluir()
@@ -146,7 +140,11 @@ namespace Projeto02App.Services
             Console.WriteLine("\nExcluir Professor\n");
 
             Console.Write("Digite o Id Do Professor: ");
-            Guid.TryParse(Console.ReadLine(), out var id);
+            if (!Guid.TryParse(Console.ReadLine(), out var id))
+            {
+                Console.WriteLine("\nId Inválido\n");
+                return;
+            }
 
             var professorRepository = new ProfessorRepository();
             var professor = professorRepository.ObterPorId(id);
@@ -154,9 +152,6 @@ namespace Projeto02App.Services
             if (professor == null)
             {
                 Console.WriteLine("\nProfessor não encontrado\n");
-
-                Console.WriteLine("Pressione uma tecla para continuar...");
-                Console.ReadKey();
                 return;
             }
 
@@ -180,9 +175,10 @@ namespace Projeto02App.Services
                 {
                     Console.WriteLine("\nNão é possível excluir este professor, pois ele possui pelo menos uma turma cadastrada.");
                 }
-
-                Console.WriteLine("Pressione uma tecla para continuar...");
-                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("\nOperação cancelada!");
             }
         }
 
@@ -203,11 +199,6 @@ namespace Projeto02App.Services
             {
                 Console.WriteLine($"\nDados do Professor: Id: {professor.IdProfessor} Nome: {professor.Nome} Telefone: {professor.Telefone} Email: {professor.Email}");
             }
-
-            Console.WriteLine("Pressione uma tecla para continuar...");
-            Console.ReadKey();
-
         }
-
     }
 }
